@@ -65,5 +65,13 @@ const ingredientsSlice = createSlice({
 
 export const ingredientsReducer = ingredientsSlice.reducer;
 
+export const selectIngredientById =
+  (id: string) => (state: { ingredients: State }) =>
+    [
+      ...state.ingredients.buns,
+      ...state.ingredients.mains,
+      ...state.ingredients.sauces
+    ].find((item) => item._id === id);
+
 export const { getBuns, getMains, getSauces, getIsIngredientsLoading } =
   ingredientsSlice.selectors;

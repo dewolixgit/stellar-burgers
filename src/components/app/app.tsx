@@ -16,13 +16,24 @@ import {
   Register,
   ResetPassword
 } from '@pages';
-import React from 'react';
+import React, { useCallback } from 'react';
 import { ProtectedRoute } from './router/protected-route';
 import { IngredientDetails, Modal, OrderInfo } from '@components';
 
 function App() {
   const location = useLocation();
   const state = location.state as { background?: Location };
+
+  const navigate = useNavigate();
+
+  const onModalClose = (pathToPush: string) => () => {
+    if (state.background) {
+      // Рассматриваем наличие state.background как показатель наличия предыдущего шага истории
+      navigate(-1);
+    } else {
+      navigate(pathToPush);
+    }
+  };
 
   return (
     <>
@@ -88,7 +99,7 @@ function App() {
           <Route
             path='/ingredients/:id'
             element={
-              <Modal title='todo' onClose={() => {}}>
+              <Modal title='Детали ингредиента' onClose={onModalClose('/')}>
                 <IngredientDetails />
               </Modal>
             }

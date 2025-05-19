@@ -22,11 +22,11 @@ import { IngredientDetails, Modal, OrderInfo } from '@components';
 
 function App() {
   const location = useLocation();
-  const state = location.state as { backgroundLocation?: Location };
+  const state = location.state as { background?: Location };
 
   return (
     <>
-      <Routes location={state?.backgroundLocation || location}>
+      <Routes location={state?.background || location}>
         <Route path='/' element={<ConstructorPage />} />
         <Route path='/feed' element={<Feed />} />
 
@@ -83,7 +83,7 @@ function App() {
 
       {/* Модалки поверх текущей страницы */}
       {/* Todo: Открывать модалки переходом на роут */}
-      {state?.backgroundLocation && (
+      {state?.background && (
         <Routes>
           <Route
             path='/ingredients/:id'

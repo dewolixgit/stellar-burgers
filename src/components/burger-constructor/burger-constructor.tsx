@@ -1,11 +1,14 @@
 import { FC, useMemo } from 'react';
 import { BurgerConstructorUI } from '@ui';
 import { useSelector } from '@store';
-import { getBun, getIngredients } from '@slices';
+import { getBun, getIngredients, getUser } from '@slices';
+import { useNavigate } from 'react-router-dom';
 
 export const BurgerConstructor: FC = () => {
   const ingredients = useSelector(getIngredients);
   const bun = useSelector(getBun);
+  const navigate = useNavigate();
+  const user = useSelector(getUser);
 
   const orderRequest = false;
 
@@ -13,6 +16,10 @@ export const BurgerConstructor: FC = () => {
 
   const onOrderClick = () => {
     if (!bun || orderRequest) return;
+
+    if (!user) {
+      navigate('/login');
+    }
   };
   const closeOrderModal = () => {};
 

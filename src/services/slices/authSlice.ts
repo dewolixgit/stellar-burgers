@@ -117,8 +117,13 @@ const userSlice = createSlice({
         state.user = null;
         state.isAuthChecked = false;
       });
+  },
+  selectors: {
+    getUser: (state) => state.user
   }
 });
+
+export const { getUser } = userSlice.selectors;
 
 export const { setAuthChecked } = userSlice.actions;
 

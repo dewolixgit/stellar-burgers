@@ -19,6 +19,7 @@ import {
 import React, { useCallback } from 'react';
 import { ProtectedRoute } from './router/protected-route';
 import { IngredientDetails, Modal, OrderInfo } from '@components';
+import { Ingredient } from '../../pages/ingredient';
 
 function App() {
   const location = useLocation();
@@ -40,7 +41,7 @@ function App() {
       <Routes location={state?.background || location}>
         <Route path='/' element={<ConstructorPage />} />
         <Route path='/feed' element={<Feed />} />
-
+        <Route path='/ingredients/:id' element={<Ingredient />} />
         <Route
           path='/login'
           element={

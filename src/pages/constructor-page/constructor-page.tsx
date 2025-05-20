@@ -4,7 +4,7 @@ import styles from './constructor-page.module.css';
 
 import { BurgerIngredients } from '../../components';
 import { BurgerConstructor } from '../../components';
-import { Preloader } from '../../components/ui';
+import { Layout, Preloader } from '../../components/ui';
 import { FC } from 'react';
 
 export const ConstructorPage: FC = () => {
@@ -12,7 +12,7 @@ export const ConstructorPage: FC = () => {
   const isIngredientsLoading = false;
 
   return (
-    <>
+    <Layout inFlexContainer>
       {isIngredientsLoading ? (
         <Preloader />
       ) : (
@@ -28,6 +28,6 @@ export const ConstructorPage: FC = () => {
           </div>
         </main>
       )}
-    </>
+    </Layout>
   );
 };

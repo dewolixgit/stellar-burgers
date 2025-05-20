@@ -1,5 +1,5 @@
 import { IngredientDetails } from '@components';
-import { useDispatch } from '../../services/store';
+import { useDispatch } from '@store';
 import { useEffect } from 'react';
 import { fetchIngredients } from '@slices';
 import { IngredientPageUI } from '@ui';

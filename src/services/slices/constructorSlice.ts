@@ -1,11 +1,9 @@
 import { createSlice, nanoid, PayloadAction } from '@reduxjs/toolkit';
-import { TIngredient } from '@utils-types';
-
-type IngredientWithUniqueId = TIngredient & { uniqueId: string };
+import { TConstructorIngredient, TIngredient } from '@utils-types';
 
 type State = {
-  bun: IngredientWithUniqueId | null;
-  ingredients: IngredientWithUniqueId[];
+  bun: TConstructorIngredient | null;
+  ingredients: TConstructorIngredient[];
 };
 
 const initialState: State = {
@@ -14,11 +12,11 @@ const initialState: State = {
 };
 
 const constructorSlice = createSlice({
-  name: 'constructor',
+  name: 'burgerConstructor',
   initialState: initialState,
   reducers: {
     addIngredient: {
-      reducer(state, action: PayloadAction<IngredientWithUniqueId>) {
+      reducer(state, action: PayloadAction<TConstructorIngredient>) {
         if (action.payload.type === 'bun') {
           state.bun = action.payload;
         } else {
@@ -26,23 +24,42 @@ const constructorSlice = createSlice({
         }
       },
       prepare(ingredient: TIngredient) {
-        return { payload: { ...ingredient, uniqueId: nanoid() } };
+        return { payload: { ...ingredient, id: nanoid() } };
       }
     },
     removeIngredient(state, action: PayloadAction<string>) {
       state.ingredients = state.ingredients.filter(
-        (item) => item.uniqueId !== action.payload
+        (item) => item.id !== action.payload
       );
     },
-    reorderIngredients(state, action: PayloadAction<IngredientWithUniqueId[]>) {
+    reorderIngredients(state, action: PayloadAction<TConstructorIngredient[]>) {
       state.ingredients = action.payload;
     },
     clearConstructor(state) {
       state.bun = null;
       state.ingredients = [];
     }
+  },
+  selectors: {
+    getBun(state) {
+      return state.bun;
+    },
+    getIngredients(state) {
+      return state.ingredients;
+    },
+    getBunPrice(state) {
+      return state.bun?.price ?? 0;
+    },
+    getTotalPrice(state) {
+      return (
+        (state.bun?.price ?? 0) * 2 +
+        state.ingredients.reduce((acc, item) => acc + item.price, 0)
+      );
+    }
   }
 });
+
+export const { getBun, getIngredients } = constructorSlice.selectors;
 
 export const {
   addIngredient,

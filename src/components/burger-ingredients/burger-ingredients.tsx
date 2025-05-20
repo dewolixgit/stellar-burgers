@@ -2,8 +2,8 @@ import { useState, useRef, useEffect, FC } from 'react';
 import { useInView } from 'react-intersection-observer';
 
 import { TIngredient, TTabMode } from '@utils-types';
-import { BurgerIngredientsUI } from '../ui/burger-ingredients';
-import { useDispatch, useSelector } from '../../services/store';
+import { BurgerIngredientsUI } from '@ui';
+import { useDispatch, useSelector } from '@store';
 import {
   fetchIngredients,
   getBuns,

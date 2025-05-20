@@ -1,5 +1,6 @@
 import { createSlice, nanoid, PayloadAction } from '@reduxjs/toolkit';
 import { TConstructorIngredient, TIngredient } from '@utils-types';
+import { swap } from '../../utils/array/swap';
 
 type State = {
   bun: TConstructorIngredient | null;
@@ -32,8 +33,20 @@ const constructorSlice = createSlice({
         (item) => item.id !== action.payload
       );
     },
-    reorderIngredients(state, action: PayloadAction<TConstructorIngredient[]>) {
-      state.ingredients = action.payload;
+    reorderIngredients(
+      state,
+      action: PayloadAction<{ direction: 'up' | 'down'; index: number }>
+    ) {
+      if (action.payload.direction === 'up' && action.payload.index > 0) {
+        swap(state.ingredients, action.payload.index, action.payload.index - 1);
+      }
+
+      if (
+        action.payload.direction === 'down' &&
+        action.payload.index < state.ingredients.length - 1
+      ) {
+        swap(state.ingredients, action.payload.index, action.payload.index + 1);
+      }
     },
     clearConstructor(state) {
       state.bun = null;

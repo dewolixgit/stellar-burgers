@@ -13,14 +13,14 @@ import { TUser } from '@utils-types';
 type TUserState = {
   user: TUser | null;
   isLoading: boolean;
-  isError: boolean;
+  error: string;
   isAuthChecked: boolean;
 };
 
 const initialState: TUserState = {
   user: null,
   isLoading: false,
-  isError: false,
+  error: '',
   isAuthChecked: false
 };
 
@@ -76,28 +76,30 @@ const userSlice = createSlice({
     builder
       .addCase(registerUser.pending, (state) => {
         state.isLoading = true;
-        state.isError = false;
+        state.error = '';
       })
       .addCase(registerUser.fulfilled, (state, action) => {
         state.user = action.payload;
         state.isLoading = false;
+        state.error = '';
       })
-      .addCase(registerUser.rejected, (state) => {
+      .addCase(registerUser.rejected, (state, action) => {
         state.isLoading = false;
-        state.isError = true;
+        state.error = action.error.message || 'Failed to register user';
       })
 
       .addCase(loginUser.pending, (state) => {
         state.isLoading = true;
-        state.isError = false;
+        state.error = '';
       })
       .addCase(loginUser.fulfilled, (state, action) => {
         state.user = action.payload;
         state.isLoading = false;
+        state.error = '';
       })
-      .addCase(loginUser.rejected, (state) => {
+      .addCase(loginUser.rejected, (state, action) => {
         state.isLoading = false;
-        state.isError = true;
+        state.error = action.error.message || 'Failed to login user';
       })
 
       .addCase(fetchUser.fulfilled, (state, action) => {
@@ -119,11 +121,12 @@ const userSlice = createSlice({
       });
   },
   selectors: {
-    getUser: (state) => state.user
+    getUser: (state) => state.user,
+    getAuthError: (state) => state.error
   }
 });
 
-export const { getUser } = userSlice.selectors;
+export const { getUser, getAuthError } = userSlice.selectors;
 
 export const { setAuthChecked } = userSlice.actions;
 

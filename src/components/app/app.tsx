@@ -124,7 +124,7 @@ function App() {
             path='/profile/orders/:number'
             element={
               <ProtectedRoute onlyAuth>
-                <Modal title='todo' onClose={() => {}}>
+                <Modal title='' onClose={onModalClose('/profile/orders')}>
                   <OrderInfo />
                 </Modal>
               </ProtectedRoute>

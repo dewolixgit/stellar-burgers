@@ -1,27 +1,51 @@
 import { FC, useMemo } from 'react';
 import { BurgerConstructorUI } from '@ui';
-import { useSelector } from '@store';
-import { getBun, getIngredients, getIsAuthenticated } from '@slices';
+import { useDispatch, useSelector } from '@store';
+import {
+  clearConstructor,
+  getBun,
+  getIngredients,
+  getIsAuthenticated,
+  getMadeOrder,
+  getMakeOrderLoading,
+  makeOrder,
+  resetMadeOrder
+} from '@slices';
 import { useNavigate } from 'react-router-dom';
 
 export const BurgerConstructor: FC = () => {
+  const navigate = useNavigate();
+
   const ingredients = useSelector(getIngredients);
   const bun = useSelector(getBun);
-  const navigate = useNavigate();
   const isAuthenticated = useSelector(getIsAuthenticated);
+  const makeOrderLoading = useSelector(getMakeOrderLoading);
+  const madeOrder = useSelector(getMadeOrder);
 
-  const orderRequest = false;
+  const dispatch = useDispatch();
 
-  const orderModalData = null;
-
-  const onOrderClick = () => {
-    if (!bun || orderRequest) return;
+  const onOrderClick = async () => {
+    if (!bun || makeOrderLoading || !ingredients.length) return;
 
     if (!isAuthenticated) {
       navigate('/login');
+      return;
+    }
+
+    const ingredientsIds = ingredients.map(({ _id }) => _id);
+
+    const result = await dispatch(
+      makeOrder([bun._id, ...ingredientsIds])
+    ).unwrap();
+
+    if (result.success) {
+      dispatch(clearConstructor());
     }
   };
-  const closeOrderModal = () => {};
+
+  const closeOrderModal = () => {
+    dispatch(resetMadeOrder());
+  };
 
   const price = useMemo(
     () =>
@@ -32,12 +56,12 @@ export const BurgerConstructor: FC = () => {
   return (
     <BurgerConstructorUI
       price={price}
-      orderRequest={orderRequest}
+      orderRequest={makeOrderLoading}
       constructorItems={{
         bun,
         ingredients
       }}
-      orderModalData={orderModalData}
+      orderModalData={madeOrder}
       onOrderClick={onOrderClick}
       closeOrderModal={closeOrderModal}
     />

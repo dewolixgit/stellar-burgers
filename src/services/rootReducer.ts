@@ -3,7 +3,8 @@ import {
   constructorReducer,
   feedsReducer,
   userReducer,
-  userOrdersReducer
+  userOrdersReducer,
+  makeOrderReducer
 } from '@slices';
 import { combineReducers } from '@reduxjs/toolkit';
 
@@ -12,5 +13,6 @@ export const rootReducer = combineReducers({
   burgerConstructor: constructorReducer,
   feeds: feedsReducer,
   user: userReducer,
-  userOrders: userOrdersReducer
+  userOrders: userOrdersReducer,
+  makeOrder: makeOrderReducer
 });

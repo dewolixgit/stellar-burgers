@@ -19,23 +19,42 @@ export const makeOrder = createAsyncThunk(
   orderBurgerApi
 );
 
-export const makeOrderSlice = createSlice({
+const makeOrderSlice = createSlice({
   name: 'makeOrder',
   initialState,
-  reducers: {},
+  reducers: {
+    resetMadeOrder: (state) => {
+      state.order = null;
+    }
+  },
   extraReducers: (builder) => {
     builder
       .addCase(makeOrder.pending, (state) => {
         state.loading = true;
         state.error = null;
+        state.order = null;
       })
-      .addCase(makeOrder.fulfilled, (state) => {
+      .addCase(makeOrder.fulfilled, (state, action) => {
         state.loading = false;
         state.error = null;
+        state.order = action.payload.order;
       })
       .addCase(makeOrder.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message || 'Failed to make order';
+        state.order = null;
       });
+  },
+  selectors: {
+    getMakeOrderLoading: (state) => state.loading,
+    getMakeOrderError: (state) => state.error,
+    getMadeOrder: (state) => state.order
   }
 });
+
+export const { resetMadeOrder } = makeOrderSlice.actions;
+
+export const { getMakeOrderLoading, getMakeOrderError, getMadeOrder } =
+  makeOrderSlice.selectors;
+
+export const { reducer: makeOrderReducer } = makeOrderSlice;

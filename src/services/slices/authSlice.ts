@@ -9,7 +9,7 @@ import {
   TLoginData
 } from '@api';
 import { TUser } from '@utils-types';
-import { setCookie } from '../../utils/cookie';
+import { getCookie, setCookie } from '../../utils/cookie';
 
 type TUserState = {
   user: TUser | null;
@@ -90,6 +90,7 @@ const userSlice = createSlice({
         state.error = '';
       })
       .addCase(loginUser.fulfilled, (state, action) => {
+        console.log('set user');
         state.user = action.payload.user;
         state.isLoading = false;
         state.error = '';
@@ -122,7 +123,7 @@ const userSlice = createSlice({
   selectors: {
     getUser: (state) => state.user,
     getIsAuthenticated: (state) =>
-      Boolean(state.user && localStorage.getItem('accessToken')),
+      Boolean(state.user && getCookie('accessToken')),
     getAuthError: (state) => state.error
   }
 });

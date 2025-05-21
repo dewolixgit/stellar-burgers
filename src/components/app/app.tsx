@@ -16,16 +16,23 @@ import {
   Register,
   ResetPassword
 } from '@pages';
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { ProtectedRoute } from './router/protected-route';
 import { IngredientDetails, Modal, OrderInfo } from '@components';
 import { Ingredient } from '../../pages/ingredient';
+import { fetchUser } from '@slices';
+import { useDispatch } from '@store';
 
 function App() {
+  const navigate = useNavigate();
   const location = useLocation();
   const state = location.state as { background?: Location };
 
-  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchUser());
+  }, []);
 
   const onModalClose = (pathToPush: string) => () => {
     if (state.background) {

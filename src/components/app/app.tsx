@@ -1,10 +1,4 @@
-import {
-  Routes,
-  Route,
-  useLocation,
-  useNavigate,
-  useParams
-} from 'react-router-dom';
+import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import {
   ConstructorPage,
   Feed,
@@ -16,7 +10,7 @@ import {
   Register,
   ResetPassword
 } from '@pages';
-import React, { useCallback, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { ProtectedRoute } from './router/protected-route';
 import { IngredientDetails, Modal, OrderInfo } from '@components';
 import { Ingredient } from '../../pages/ingredient';
@@ -117,7 +111,7 @@ function App() {
           <Route
             path='/feed/:number'
             element={
-              <Modal title='todo' onClose={() => {}}>
+              <Modal title='Детали заказа' onClose={onModalClose('/feed')}>
                 <OrderInfo />
               </Modal>
             }

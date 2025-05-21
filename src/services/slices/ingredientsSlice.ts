@@ -55,6 +55,11 @@ const ingredientsSlice = createSlice({
     getBuns: (state) => state.buns,
     getMains: (state) => state.mains,
     getSauces: (state) => state.sauces,
+    getAllIngredients: (state) => [
+      ...state.buns,
+      ...state.mains,
+      ...state.sauces
+    ],
     getIsIngredientsLoading: (state) =>
       state.loading &&
       state.buns.length === 0 &&
@@ -73,5 +78,10 @@ export const selectIngredientById =
       ...state.ingredients.sauces
     ].find((item) => item._id === id);
 
-export const { getBuns, getMains, getSauces, getIsIngredientsLoading } =
-  ingredientsSlice.selectors;
+export const {
+  getAllIngredients,
+  getBuns,
+  getMains,
+  getSauces,
+  getIsIngredientsLoading
+} = ingredientsSlice.selectors;

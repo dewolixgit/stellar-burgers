@@ -7,6 +7,7 @@ import {
   makeOrderReducer
 } from '@slices';
 import { combineReducers } from '@reduxjs/toolkit';
+import { orderByNumberReducer } from './slices/orderByNumberSlice';
 
 export const rootReducer = combineReducers({
   ingredients: ingredientsReducer,
@@ -14,5 +15,6 @@ export const rootReducer = combineReducers({
   feeds: feedsReducer,
   user: userReducer,
   userOrders: userOrdersReducer,
-  makeOrder: makeOrderReducer
+  makeOrder: makeOrderReducer,
+  orderByNumber: orderByNumberReducer
 });

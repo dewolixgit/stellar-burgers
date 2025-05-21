@@ -5,20 +5,16 @@ import { OrderCardProps } from './type';
 import { TIngredient } from '@utils-types';
 import { OrderCardUI } from '@ui';
 import { useSelector } from '@store';
-import { getBuns, getMains, getSauces } from '@slices';
+import { getAllIngredients } from '@slices';
 
 const maxIngredients = 6;
 
 export const OrderCard: FC<OrderCardProps> = memo(({ order }) => {
   const location = useLocation();
 
-  const mains: TIngredient[] = useSelector(getMains);
-  const buns: TIngredient[] = useSelector(getBuns);
-  const sauces: TIngredient[] = useSelector(getSauces);
+  const ingredients: TIngredient[] = useSelector(getAllIngredients);
 
   const orderInfo = useMemo(() => {
-    const ingredients = [...buns, ...mains, ...sauces];
-
     if (!ingredients.length) return null;
 
     const ingredientsInfo = order.ingredients.reduce(
@@ -48,7 +44,7 @@ export const OrderCard: FC<OrderCardProps> = memo(({ order }) => {
       total,
       date
     };
-  }, [order, buns, mains, sauces]);
+  }, [order, ingredients]);
 
   if (!orderInfo) return null;
 

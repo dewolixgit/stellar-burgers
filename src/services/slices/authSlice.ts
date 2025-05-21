@@ -9,6 +9,7 @@ import {
   TLoginData
 } from '@api';
 import { TUser } from '@utils-types';
+import { setCookie } from '../../utils/cookie';
 
 type TUserState = {
   user: TUser | null;
@@ -26,18 +27,12 @@ const initialState: TUserState = {
 
 export const registerUser = createAsyncThunk(
   'user/register',
-  async (data: TRegisterData) => {
-    const res = await registerUserApi(data);
-    return res.user;
-  }
+  async (data: TRegisterData) => registerUserApi(data)
 );
 
 export const loginUser = createAsyncThunk(
   'user/login',
-  async (data: TLoginData) => {
-    const res = await loginUserApi(data);
-    return res.user;
-  }
+  async (data: TLoginData) => loginUserApi(data)
 );
 
 export const logoutUser = createAsyncThunk('user/logout', async () => {
@@ -79,9 +74,11 @@ const userSlice = createSlice({
         state.error = '';
       })
       .addCase(registerUser.fulfilled, (state, action) => {
-        state.user = action.payload;
+        state.user = action.payload.user;
         state.isLoading = false;
         state.error = '';
+        setCookie('accessToken', action.payload.accessToken);
+        localStorage.setItem('refreshToken', action.payload.refreshToken);
       })
       .addCase(registerUser.rejected, (state, action) => {
         state.isLoading = false;
@@ -93,9 +90,11 @@ const userSlice = createSlice({
         state.error = '';
       })
       .addCase(loginUser.fulfilled, (state, action) => {
-        state.user = action.payload;
+        state.user = action.payload.user;
         state.isLoading = false;
         state.error = '';
+        setCookie('accessToken', action.payload.accessToken);
+        localStorage.setItem('refreshToken', action.payload.refreshToken);
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.isLoading = false;
@@ -122,11 +121,14 @@ const userSlice = createSlice({
   },
   selectors: {
     getUser: (state) => state.user,
+    getIsAuthenticated: (state) =>
+      Boolean(state.user && localStorage.getItem('accessToken')),
     getAuthError: (state) => state.error
   }
 });
 
-export const { getUser, getAuthError } = userSlice.selectors;
+export const { getUser, getAuthError, getIsAuthenticated } =
+  userSlice.selectors;
 
 export const { setAuthChecked } = userSlice.actions;
 

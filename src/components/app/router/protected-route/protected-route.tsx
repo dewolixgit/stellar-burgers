@@ -1,7 +1,7 @@
 import { Navigate, useLocation } from 'react-router-dom';
 import { ReactNode } from 'react';
 import { useSelector } from '@store';
-import { getUser } from '@slices';
+import { getIsAuthenticated } from '@slices';
 
 type Props = {
   onlyAuth?: boolean;
@@ -11,17 +11,15 @@ type Props = {
 
 export const ProtectedRoute = ({ children, onlyAuth, onlyUnauth }: Props) => {
   const location = useLocation();
-  const user = useSelector(getUser);
+  const isAuthenticated = useSelector(getIsAuthenticated);
 
   // Если требуется авторизация, а пользователь не авторизован, то редиректим на страницу логина
-  if (onlyAuth && !user) {
-    console.log('redirect to login');
+  if (onlyAuth && !isAuthenticated) {
     return <Navigate to='/login' replace state={{ from: location }} />;
   }
 
   // Если требуется неавторизованный доступ, а пользователь авторизован, то редиректим на главную страницу
-  if (onlyUnauth && user) {
-    console.log('redirect to /');
+  if (onlyUnauth && isAuthenticated) {
     return <Navigate to='/' replace />;
   }
 

@@ -3,13 +3,13 @@ import { FC } from 'react';
 import styles from './constructor-page.module.css';
 
 import { ConstructorPageUIProps } from './type';
-import { Preloader } from '@ui';
+import { Layout, Preloader } from '@ui';
 import { BurgerIngredients, BurgerConstructor } from '@components';
 
 export const ConstructorPageUI: FC<ConstructorPageUIProps> = ({
   isIngredientsLoading
 }) => (
-  <>
+  <Layout inFlexContainer>
     {isIngredientsLoading ? (
       <Preloader />
     ) : (
@@ -25,5 +25,5 @@ export const ConstructorPageUI: FC<ConstructorPageUIProps> = ({
         </div>
       </main>
     )}
-  </>
+  </Layout>
 );

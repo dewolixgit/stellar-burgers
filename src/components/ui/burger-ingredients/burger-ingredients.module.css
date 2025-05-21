@@ -19,10 +19,6 @@ p {
   overflow-y: scroll;
 }
 
-.preloader {
-    padding: 64px 0;
-}
-
 .menu {
   display: flex;
   list-style-type: none;

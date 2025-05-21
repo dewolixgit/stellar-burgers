@@ -4,6 +4,8 @@
   overflow: hidden;
   max-width: 1240px;
   margin: 0 auto;
+
+  flex: 1 0 0;
 }
 
 .title {

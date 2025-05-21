@@ -5,11 +5,6 @@ import { fetchIngredients, getIsIngredientsLoading } from '@slices';
 
 export const ConstructorPage: FC = () => {
   const isIngredientsLoading = useSelector(getIsIngredientsLoading);
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(fetchIngredients());
-  }, []);
 
   return <ConstructorPageUI isIngredientsLoading={isIngredientsLoading} />;
 };

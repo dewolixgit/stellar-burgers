@@ -47,7 +47,15 @@ const feedsSlice = createSlice({
         state.loading = false;
         state.error = action.error.message || 'Failed to fetch feeds';
       });
+  },
+  selectors: {
+    getFeedsItems: (state) => state.items,
+    getFeedsTotal: (state) => state.total,
+    getFeedsTotalToday: (state) => state.totalToday
   }
 });
+
+export const { getFeedsItems, getFeedsTotal, getFeedsTotalToday } =
+  feedsSlice.selectors;
 
 export const feedsReducer = feedsSlice.reducer;

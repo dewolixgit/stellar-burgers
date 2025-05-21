@@ -24,7 +24,7 @@ export const BurgerConstructor: FC = () => {
 
   const dispatch = useDispatch();
 
-  const onOrderClick = async () => {
+  const onOrderClick = () => {
     if (!bun || makeOrderLoading || !ingredients.length) return;
 
     if (!isAuthenticated) {
@@ -32,15 +32,11 @@ export const BurgerConstructor: FC = () => {
       return;
     }
 
+    dispatch(clearConstructor());
+
     const ingredientsIds = ingredients.map(({ _id }) => _id);
 
-    const result = await dispatch(
-      makeOrder([bun._id, ...ingredientsIds])
-    ).unwrap();
-
-    if (result.success) {
-      dispatch(clearConstructor());
-    }
+    dispatch(makeOrder([bun._id, ...ingredientsIds]));
   };
 
   const closeOrderModal = () => {

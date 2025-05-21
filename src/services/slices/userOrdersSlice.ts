@@ -40,7 +40,12 @@ export const userOrdersSlice = createSlice({
         state.loading = false;
         state.error = action.error.message || 'Failed to fetch user orders';
       });
+  },
+  selectors: {
+    getUserOrders: (state) => state.orders
   }
 });
+
+export const { getUserOrders } = userOrdersSlice.selectors;
 
 export const userOrdersReducer = userOrdersSlice.reducer;

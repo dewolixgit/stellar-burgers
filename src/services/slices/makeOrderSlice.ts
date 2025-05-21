@@ -25,6 +25,8 @@ const makeOrderSlice = createSlice({
   reducers: {
     resetMadeOrder: (state) => {
       state.order = null;
+      state.loading = false;
+      state.error = null;
     }
   },
   extraReducers: (builder) => {

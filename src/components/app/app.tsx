@@ -20,8 +20,9 @@ import React, { useCallback, useEffect } from 'react';
 import { ProtectedRoute } from './router/protected-route';
 import { IngredientDetails, Modal, OrderInfo } from '@components';
 import { Ingredient } from '../../pages/ingredient';
-import { fetchUser } from '@slices';
+import { fetchIngredients, fetchUser } from '@slices';
 import { useDispatch } from '@store';
+import { Layout } from '@ui';
 
 function App() {
   const navigate = useNavigate();
@@ -32,6 +33,7 @@ function App() {
 
   useEffect(() => {
     dispatch(fetchUser());
+    dispatch(fetchIngredients());
   }, []);
 
   const onModalClose = (pathToPush: string) => () => {
@@ -44,7 +46,7 @@ function App() {
   };
 
   return (
-    <>
+    <Layout inFlexContainer>
       <Routes location={state?.background || location}>
         <Route path='/' element={<ConstructorPage />} />
         <Route path='/feed' element={<Feed />} />
@@ -132,7 +134,7 @@ function App() {
           />
         </Routes>
       )}
-    </>
+    </Layout>
   );
 }
 

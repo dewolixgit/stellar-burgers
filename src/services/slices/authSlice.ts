@@ -51,6 +51,7 @@ const userSlice = createSlice({
       .addCase(registerUser.pending, (state) => {
         state.isLoading = true;
         state.error = '';
+        state.user = null;
       })
       .addCase(registerUser.fulfilled, (state, action) => {
         state.user = action.payload.user;
@@ -60,11 +61,13 @@ const userSlice = createSlice({
       .addCase(registerUser.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.error.message || 'Failed to register user';
+        state.user = null;
       })
 
       .addCase(loginUser.pending, (state) => {
         state.isLoading = true;
         state.error = '';
+        state.user = null;
       })
       .addCase(loginUser.fulfilled, (state, action) => {
         state.user = action.payload.user;
@@ -74,13 +77,18 @@ const userSlice = createSlice({
       .addCase(loginUser.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.error.message || 'Failed to login user';
+        state.user = null;
       })
 
       .addCase(fetchUser.fulfilled, (state, action) => {
         state.user = action.payload.user;
+        state.error = '';
+        state.isLoading = false;
       })
-      .addCase(fetchUser.rejected, (state) => {
+      .addCase(fetchUser.rejected, (state, action) => {
         state.user = null;
+        state.isLoading = false;
+        state.error = action.error.message || 'Failed to fetch user';
       })
 
       .addCase(updateUser.fulfilled, (state, action) => {

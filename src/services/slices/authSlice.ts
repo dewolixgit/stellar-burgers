@@ -33,9 +33,7 @@ export const loginUser = createAsyncThunk(
   async (data: TLoginData) => loginUserApi(data)
 );
 
-export const logoutUser = createAsyncThunk('user/logout', async () => {
-  await logoutApi();
-});
+export const logoutUser = createAsyncThunk('user/logout', logoutApi);
 
 export const fetchUser = createAsyncThunk('user/fetch', getUserApi);
 
@@ -58,8 +56,6 @@ const userSlice = createSlice({
         state.user = action.payload.user;
         state.isLoading = false;
         state.error = '';
-        setCookie('accessToken', action.payload.accessToken);
-        localStorage.setItem('refreshToken', action.payload.refreshToken);
       })
       .addCase(registerUser.rejected, (state, action) => {
         state.isLoading = false;
@@ -71,12 +67,9 @@ const userSlice = createSlice({
         state.error = '';
       })
       .addCase(loginUser.fulfilled, (state, action) => {
-        console.log('set user');
         state.user = action.payload.user;
         state.isLoading = false;
         state.error = '';
-        setCookie('accessToken', action.payload.accessToken);
-        localStorage.setItem('refreshToken', action.payload.refreshToken);
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.isLoading = false;

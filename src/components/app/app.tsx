@@ -111,7 +111,6 @@ function App() {
       </Routes>
 
       {/* Модалки поверх текущей страницы */}
-      {/* Todo: Открывать модалки переходом на роут */}
       {state?.background && (
         <Routes>
           <Route
@@ -134,7 +133,10 @@ function App() {
             path='/profile/orders/:number'
             element={
               <ProtectedRoute onlyAuth>
-                <Modal title='' onClose={onModalClose('/profile/orders')}>
+                <Modal
+                  title='Детали заказа'
+                  onClose={onModalClose('/profile/orders')}
+                >
                   <OrderInfo />
                 </Modal>
               </ProtectedRoute>

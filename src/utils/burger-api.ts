@@ -1,5 +1,7 @@
 import { setCookie, getCookie } from './cookie';
 import { TIngredient, TOrder, TOrdersData, TUser } from './types';
+import { COOKIES_KEYS } from './config/cookies';
+import { LOCAL_STORAGE_KEYS } from './config/localStorage';
 
 const URL = process.env.BURGER_API_URL;
 
@@ -30,8 +32,11 @@ export const refreshToken = (): Promise<TRefreshResponse> =>
       if (!refreshData.success) {
         return Promise.reject(refreshData);
       }
-      localStorage.setItem('refreshToken', refreshData.refreshToken);
-      setCookie('accessToken', refreshData.accessToken);
+      localStorage.setItem(
+        LOCAL_STORAGE_KEYS.refreshToken,
+        refreshData.refreshToken
+      );
+      setCookie(COOKIES_KEYS.accessToken, refreshData.accessToken);
       return refreshData;
     });
 
@@ -92,7 +97,7 @@ export const getOrdersApi = () =>
     method: 'GET',
     headers: {
       'Content-Type': 'application/json;charset=utf-8',
-      authorization: getCookie('accessToken')
+      authorization: getCookie(COOKIES_KEYS.accessToken)
     } as HeadersInit
   }).then((data) => {
     if (data?.success) return data.orders;
@@ -109,7 +114,7 @@ export const orderBurgerApi = (data: string[]) =>
     method: 'POST',
     headers: {
       'Content-Type': 'application/json;charset=utf-8',
-      authorization: getCookie('accessToken')
+      authorization: getCookie(COOKIES_KEYS.accessToken)
     } as HeadersInit,
     body: JSON.stringify({
       ingredients: data
@@ -209,7 +214,7 @@ type TUserResponse = TServerResponse<{ user: TUser }>;
 export const getUserApi = () =>
   fetchWithRefresh<TUserResponse>(`${URL}/auth/user`, {
     headers: {
-      authorization: getCookie('accessToken')
+      authorization: getCookie(COOKIES_KEYS.accessToken)
     } as HeadersInit
   });
 
@@ -218,7 +223,7 @@ export const updateUserApi = (user: Partial<TRegisterData>) =>
     method: 'PATCH',
     headers: {
       'Content-Type': 'application/json;charset=utf-8',
-      authorization: getCookie('accessToken')
+      authorization: getCookie(COOKIES_KEYS.accessToken)
     } as HeadersInit,
     body: JSON.stringify(user)
   });
@@ -230,6 +235,6 @@ export const logoutApi = () =>
       'Content-Type': 'application/json;charset=utf-8'
     },
     body: JSON.stringify({
-      token: localStorage.getItem('refreshToken')
+      token: localStorage.getItem(LOCAL_STORAGE_KEYS.refreshToken)
     })
   }).then((res) => checkResponse<TServerResponse<{}>>(res));

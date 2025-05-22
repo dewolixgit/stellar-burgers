@@ -3,6 +3,9 @@ import { RegisterUI } from '@ui-pages';
 import { useDispatch, useSelector } from '@store';
 import { getAuthError, loginUser, registerUser } from '@slices';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { setCookie } from '../../utils/cookie';
+import { COOKIES_KEYS } from '../../utils/config/cookies';
+import { LOCAL_STORAGE_KEYS } from '../../utils/config/localStorage';
 
 export const Register: FC = () => {
   const navigate = useNavigate();
@@ -24,6 +27,12 @@ export const Register: FC = () => {
       ).unwrap();
 
       if (result.success) {
+        setCookie(COOKIES_KEYS.accessToken, result.accessToken);
+        localStorage.setItem(
+          LOCAL_STORAGE_KEYS.refreshToken,
+          result.refreshToken
+        );
+
         if (location.state?.from && location.state.from !== location.pathname) {
           navigate(location.state.from ?? '/');
         } else {

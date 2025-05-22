@@ -3,8 +3,8 @@ import { LoginUI } from '@ui-pages';
 import { useDispatch, useSelector } from '@store';
 import { getAuthError, loginUser } from '@slices';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { LOCAL_STORAGE_KEYS } from '../../utils/config/localStorage';
-import { COOKIES_KEYS } from '../../utils/config/cookies';
+import { LOCAL_STORAGE_KEYS } from '@config';
+import { COOKIES_KEYS } from '@config';
 import { setCookie } from '../../utils/cookie';
 
 export const Login: FC = () => {

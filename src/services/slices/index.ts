@@ -9,3 +9,5 @@ export * from './feedsSlice';
 export * from './userOrdersSlice';
 
 export * from './makeOrderSlice';
+
+export * from './orderByNumberSlice';

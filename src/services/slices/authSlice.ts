@@ -9,7 +9,7 @@ import {
   TLoginData
 } from '@api';
 import { TUser } from '@utils-types';
-import { getCookie, setCookie } from '../../utils/cookie';
+import { getCookie } from '../../utils/cookie';
 
 type TUserState = {
   user: TUser | null;

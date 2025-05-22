@@ -1,14 +1,10 @@
 import { FC, useEffect, useMemo } from 'react';
-import { Preloader } from '../ui/preloader';
-import { OrderInfoUI } from '../ui/order-info';
+import { Preloader } from '@ui';
+import { OrderInfoUI } from '@ui';
 import { TIngredient } from '@utils-types';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from '@store';
-import {
-  fetchOrderByNumber,
-  getFetchedOrderByNumber
-} from '../../services/slices/orderByNumberSlice';
-import { isInteger } from '../../utils/typeguard/isInteger';
+import { fetchOrderByNumber, getFetchedOrderByNumber } from '@slices';
 import { getAllIngredients } from '@slices';
 
 export const OrderInfo: FC = () => {
@@ -65,7 +61,7 @@ export const OrderInfo: FC = () => {
   useEffect(() => {
     const numberDerived = Number(number);
 
-    if (isInteger(numberDerived)) {
+    if (Number.isInteger(numberDerived)) {
       dispatch(fetchOrderByNumber(numberDerived));
     }
   }, []);

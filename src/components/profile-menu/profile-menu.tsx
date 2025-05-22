@@ -3,9 +3,9 @@ import { useLocation } from 'react-router-dom';
 import { ProfileMenuUI } from '@ui';
 import { useDispatch } from '@store';
 import { logoutUser } from '@slices';
-import { LOCAL_STORAGE_KEYS } from '../../utils/config/localStorage';
-import { deleteCookie, setCookie } from '../../utils/cookie';
-import { COOKIES_KEYS } from '../../utils/config/cookies';
+import { LOCAL_STORAGE_KEYS } from '@config';
+import { deleteCookie } from '../../utils/cookie';
+import { COOKIES_KEYS } from '@config';
 
 export const ProfileMenu: FC = () => {
   const { pathname } = useLocation();

@@ -1,11 +1,11 @@
 import { FC, SyntheticEvent, useState } from 'react';
 import { RegisterUI } from '@ui-pages';
 import { useDispatch, useSelector } from '@store';
-import { getAuthError, loginUser, registerUser } from '@slices';
+import { getAuthError, registerUser } from '@slices';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { setCookie } from '../../utils/cookie';
-import { COOKIES_KEYS } from '../../utils/config/cookies';
-import { LOCAL_STORAGE_KEYS } from '../../utils/config/localStorage';
+import { COOKIES_KEYS } from '@config';
+import { LOCAL_STORAGE_KEYS } from '@config';
 
 export const Register: FC = () => {
   const navigate = useNavigate();

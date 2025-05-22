@@ -1,7 +1,7 @@
 import { setCookie, getCookie } from './cookie';
 import { TIngredient, TOrder, TOrdersData, TUser } from './types';
-import { COOKIES_KEYS } from './config/cookies';
-import { LOCAL_STORAGE_KEYS } from './config/localStorage';
+import { COOKIES_KEYS } from '@config';
+import { LOCAL_STORAGE_KEYS } from '@config';
 
 const URL = process.env.BURGER_API_URL;
 

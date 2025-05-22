@@ -3,12 +3,7 @@ import { FeedUI } from '@ui-pages';
 import { TOrder } from '@utils-types';
 import { FC, useEffect } from 'react';
 import { useDispatch, useSelector } from '@store';
-import {
-  fetchFeeds,
-  fetchUserOrders,
-  getFeedsItems,
-  getUserOrders
-} from '@slices';
+import { fetchFeeds, getFeedsItems } from '@slices';
 
 export const Feed: FC = () => {
   const orders: TOrder[] = useSelector(getFeedsItems);

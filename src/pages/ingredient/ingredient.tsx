@@ -1,4 +1,3 @@
-import { IngredientDetails } from '@components';
 import { useDispatch } from '@store';
 import { useEffect } from 'react';
 import { fetchIngredients } from '@slices';

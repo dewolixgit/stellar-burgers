@@ -1,7 +1,7 @@
-import { FC, useEffect } from 'react';
+import { FC } from 'react';
 import { ConstructorPageUI } from '@ui-pages';
-import { useDispatch, useSelector } from '@store';
-import { fetchIngredients, getIsIngredientsLoading } from '@slices';
+import { useSelector } from '@store';
+import { getIsIngredientsLoading } from '@slices';
 
 export const ConstructorPage: FC = () => {
   const isIngredientsLoading = useSelector(getIsIngredientsLoading);

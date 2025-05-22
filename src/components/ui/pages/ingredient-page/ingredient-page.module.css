@@ -1,0 +1,12 @@
+.container {
+
+}
+
+.details {
+  align-self: center;
+  flex-grow: 1;
+
+  display: flex;
+  justify-content: center;
+  margin-bottom: 160px;
+}

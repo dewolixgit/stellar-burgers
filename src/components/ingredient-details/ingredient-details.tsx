@@ -1,14 +1,25 @@
-import { FC } from 'react';
-import { Preloader } from '../ui/preloader';
-import { IngredientDetailsUI } from '../ui/ingredient-details';
+import { Preloader } from '@ui';
+import { IngredientDetailsUI } from '@ui';
+import { useSelector } from '@store';
+import { selectIngredientById } from '@slices';
+import { useParams } from 'react-router-dom';
 
-export const IngredientDetails: FC = () => {
-  /** TODO: взять переменную из стора */
-  const ingredientData = null;
+type Props = {
+  className?: string;
+};
+
+export const IngredientDetails = ({ className }: Props) => {
+  const { id } = useParams<{ id: string }>();
+  const ingredientData = useSelector(selectIngredientById(id!));
 
   if (!ingredientData) {
     return <Preloader />;
   }
 
-  return <IngredientDetailsUI ingredientData={ingredientData} />;
+  return (
+    <IngredientDetailsUI
+      ingredientData={ingredientData}
+      className={className}
+    />
+  );
 };

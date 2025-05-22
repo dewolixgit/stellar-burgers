@@ -8,6 +8,8 @@
   width: 1240px;
   overflow: hidden;
   margin: 0 auto;
+
+  flex: 1 1 0;
 }
 
 .orders {

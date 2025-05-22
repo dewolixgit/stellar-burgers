@@ -3,7 +3,7 @@ import { FC } from 'react';
 import styles from './constructor-page.module.css';
 
 import { ConstructorPageUIProps } from './type';
-import { Layout, Preloader } from '@ui';
+import { Preloader } from '@ui';
 import { BurgerIngredients, BurgerConstructor } from '@components';
 
 export const ConstructorPageUI: FC<ConstructorPageUIProps> = ({

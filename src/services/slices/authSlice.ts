@@ -15,14 +15,12 @@ type TUserState = {
   user: TUser | null;
   isLoading: boolean;
   error: string;
-  isAuthChecked: boolean;
 };
 
 const initialState: TUserState = {
   user: null,
   isLoading: false,
-  error: '',
-  isAuthChecked: false
+  error: ''
 };
 
 export const registerUser = createAsyncThunk(
@@ -62,11 +60,7 @@ export const updateUser = createAsyncThunk(
 const userSlice = createSlice({
   name: 'user',
   initialState,
-  reducers: {
-    setAuthChecked(state, action) {
-      state.isAuthChecked = action.payload;
-    }
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(registerUser.pending, (state) => {
@@ -104,11 +98,9 @@ const userSlice = createSlice({
 
       .addCase(fetchUser.fulfilled, (state, action) => {
         state.user = action.payload;
-        state.isAuthChecked = true;
       })
       .addCase(fetchUser.rejected, (state) => {
         state.user = null;
-        state.isAuthChecked = true;
       })
 
       .addCase(updateUser.fulfilled, (state, action) => {
@@ -117,7 +109,6 @@ const userSlice = createSlice({
 
       .addCase(logoutUser.fulfilled, (state) => {
         state.user = null;
-        state.isAuthChecked = false;
       });
   },
   selectors: {
@@ -130,7 +121,5 @@ const userSlice = createSlice({
 
 export const { getUser, getAuthError, getIsAuthenticated } =
   userSlice.selectors;
-
-export const { setAuthChecked } = userSlice.actions;
 
 export const userReducer = userSlice.reducer;

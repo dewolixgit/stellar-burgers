@@ -15,10 +15,12 @@ import { ProtectedRoute } from './router/protected-route';
 import { IngredientDetails, Modal, OrderInfo } from '@components';
 import { Ingredient } from '../../pages/ingredient';
 import { fetchIngredients, fetchUser } from '@slices';
-import { useDispatch } from '@store';
-import { Layout } from '@ui';
+import { useDispatch, useSelector } from '@store';
+import { Layout, Preloader } from '@ui';
 
 function App() {
+  const [authChecked, setAuthChecked] = React.useState(false);
+
   const navigate = useNavigate();
   const location = useLocation();
   const state = location.state as { background?: Location };
@@ -26,8 +28,12 @@ function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchUser());
-    dispatch(fetchIngredients());
+    const load = async () => {
+      await Promise.all([dispatch(fetchUser()), dispatch(fetchIngredients())]);
+      setAuthChecked(true);
+    };
+
+    load();
   }, []);
 
   const onModalClose = (pathToPush: string) => () => {
@@ -38,6 +44,14 @@ function App() {
       navigate(pathToPush);
     }
   };
+
+  if (!authChecked) {
+    return (
+      <Layout inFlexContainer>
+        <Preloader />
+      </Layout>
+    );
+  }
 
   return (
     <Layout inFlexContainer>

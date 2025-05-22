@@ -27,10 +27,6 @@ export const AppHeader: FC = () => {
     ? PROFILE_PATH
     : null;
 
-  console.log('matchedConstructorPath', matchedConstructorPath);
-  console.log('matchedOrdersPath', matchedOrdersPath);
-  console.log('matchedProfilePath', matchedProfilePath);
-
   return (
     <AppHeaderUI
       userName={user?.name}

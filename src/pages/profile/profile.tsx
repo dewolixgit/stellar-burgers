@@ -48,8 +48,6 @@ export const Profile: FC = () => {
     }));
   };
 
-  console.log('updateUserError', updateUserError);
-
   return (
     <ProfileUI
       formValue={formValue}

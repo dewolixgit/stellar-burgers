@@ -37,24 +37,11 @@ export const logoutUser = createAsyncThunk('user/logout', async () => {
   await logoutApi();
 });
 
-export const fetchUser = createAsyncThunk(
-  'user/fetch',
-  async (_, { rejectWithValue }) => {
-    try {
-      const res = await getUserApi();
-      return res.user;
-    } catch (err) {
-      return rejectWithValue(err);
-    }
-  }
-);
+export const fetchUser = createAsyncThunk('user/fetch', getUserApi);
 
 export const updateUser = createAsyncThunk(
   'user/update',
-  async (data: Partial<TRegisterData>) => {
-    const res = await updateUserApi(data);
-    return res.user;
-  }
+  async (data: Partial<TRegisterData>) => updateUserApi(data)
 );
 
 const userSlice = createSlice({
@@ -97,14 +84,20 @@ const userSlice = createSlice({
       })
 
       .addCase(fetchUser.fulfilled, (state, action) => {
-        state.user = action.payload;
+        state.user = action.payload.user;
       })
       .addCase(fetchUser.rejected, (state) => {
         state.user = null;
       })
 
       .addCase(updateUser.fulfilled, (state, action) => {
-        state.user = action.payload;
+        state.user = action.payload.user;
+        state.error = '';
+        state.isLoading = false;
+      })
+      .addCase(updateUser.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.error.message || 'Failed to update user';
       })
 
       .addCase(logoutUser.fulfilled, (state) => {
